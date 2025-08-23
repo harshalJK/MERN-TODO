@@ -1,0 +1,15 @@
+:root { color-scheme: light; }
+body { margin: 0; }
+.container { max-width: 720px; margin: 3rem auto; padding: 0 1rem; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+h1 { font-size: 2rem; margin-bottom: 1rem; }
+.add-form { display: flex; gap: .5rem; margin-bottom: 1rem; }
+.add-form input { flex: 1; padding: .6rem .8rem; border: 1px solid #ddd; border-radius: .5rem; }
+.add-form button { padding: .6rem 1rem; border: none; border-radius: .5rem; background: #111; color: white; cursor: pointer; }
+.list { list-style: none; padding: 0; margin: 0; display: grid; gap: .5rem; }
+.item { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .75rem; padding: .5rem .75rem; border: 1px solid #eee; border-radius: .75rem; }
+.item .title { user-select: none; }
+.item.done .title { text-decoration: line-through; color: #888; }
+.item .actions { display: flex; gap: .5rem; }
+.item .actions button { border: 1px solid #ddd; background: white; border-radius: .5rem; padding: .3rem .6rem; cursor: pointer; }
+.error { background: #fee; color: #a00; padding: .5rem .75rem; border-radius: .5rem; }
+.empty { color: #666; padding: .5rem; }
