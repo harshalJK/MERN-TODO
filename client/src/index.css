@@ -1,15 +1,180 @@
-:root { color-scheme: light; }
-body { margin: 0; }
-.container { max-width: 720px; margin: 3rem auto; padding: 0 1rem; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
-h1 { font-size: 2rem; margin-bottom: 1rem; }
-.add-form { display: flex; gap: .5rem; margin-bottom: 1rem; }
-.add-form input { flex: 1; padding: .6rem .8rem; border: 1px solid #ddd; border-radius: .5rem; }
-.add-form button { padding: .6rem 1rem; border: none; border-radius: .5rem; background: #111; color: white; cursor: pointer; }
-.list { list-style: none; padding: 0; margin: 0; display: grid; gap: .5rem; }
-.item { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .75rem; padding: .5rem .75rem; border: 1px solid #eee; border-radius: .75rem; }
-.item .title { user-select: none; }
-.item.done .title { text-decoration: line-through; color: #888; }
-.item .actions { display: flex; gap: .5rem; }
-.item .actions button { border: 1px solid #ddd; background: white; border-radius: .5rem; padding: .3rem .6rem; cursor: pointer; }
-.error { background: #fee; color: #a00; padding: .5rem .75rem; border-radius: .5rem; }
-.empty { color: #666; padding: .5rem; }
+/* ===== Design Tokens ===== */
+:root {
+  --bg: #0b0f18;
+  --bg-soft: #0f1626;
+  --card: rgba(255,255,255,.06);
+  --text: #e6ebf2;
+  --muted: #a6b0c3;
+  --brand: #6aaefc;
+  --brand-2: #7c6afc;
+  --danger: #ff6b6b;
+  --ring: rgba(122,162,247,.45);
+  --radius: 16px;
+  --shadow: 0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  color: var(--text);
+  background:
+    radial-gradient(60% 60% at 10% 10%, rgba(108, 92, 231, .25), transparent 60%),
+    radial-gradient(60% 60% at 90% 20%, rgba(52, 172, 224, .25), transparent 60%),
+    linear-gradient(180deg, #0a0f18, #0b0f18 30%, #0a0f18 100%);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* ===== Layout ===== */
+.container {
+  max-width: 780px;
+  margin: clamp(24px, 7vh, 80px) auto;
+  padding: 28px;
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: calc(var(--radius) + 4px);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.badge {
+  font-size: 12px;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  box-shadow: 0 6px 16px rgba(108,92,231,.35);
+}
+h1 {
+  font-size: clamp(20px, 3vw, 28px);
+  line-height: 1.1;
+  margin: 0;
+}
+
+/* ===== Add form ===== */
+.add-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--radius);
+  background: rgba(255,255,255,.03);
+  transition: border-color .2s, box-shadow .2s;
+}
+.add-form:focus-within {
+  border-color: var(--ring);
+  box-shadow: 0 0 0 4px rgba(122,162,247,.12);
+}
+.add-form input {
+  height: 44px;
+  padding: 0 14px;
+  font-size: 16px;
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  outline: none;
+}
+.btn {
+  height: 44px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 12px;
+  color: white;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform .08s ease, box-shadow .2s ease;
+  box-shadow: 0 10px 20px rgba(108, 92, 231, .35);
+}
+.btn:active { transform: translateY(1px) scale(.99); }
+
+/* ===== Filters / Meta ===== */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 16px 2px 10px;
+  flex-wrap: wrap;
+}
+.filters { display: flex; gap: 8px; }
+.chip {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  color: var(--muted);
+  font-size: 13px;
+  cursor: pointer;
+  transition: .2s;
+}
+.chip.active {
+  color: white;
+  border-color: var(--ring);
+  background: rgba(122,162,247,.15);
+  box-shadow: inset 0 0 0 1px rgba(122,162,247,.2);
+}
+.meta { color: var(--muted); font-size: 13px; }
+.link {
+  background: transparent;
+  border: 0;
+  color: #ffb3b3;
+  cursor: pointer;
+}
+
+/* ===== List & Item ===== */
+.list { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 8px; }
+.item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 14px;
+  background: rgba(255,255,255,.02);
+  transition: transform .08s ease, border-color .2s;
+}
+.item:hover { border-color: rgba(255,255,255,.2); transform: translateY(-1px); }
+.title { user-select: none; }
+.item.done .title { text-decoration: line-through; color: var(--muted); }
+
+/* custom checkbox */
+.check {
+  width: 18px; height: 18px; border-radius: 6px;
+  appearance: none; outline: none; cursor: pointer;
+  border: 1.5px solid rgba(255,255,255,.35);
+  display: grid; place-items: center; transition: .2s;
+}
+.check:checked {
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  box-shadow: 0 0 0 3px rgba(122,162,247,.22);
+}
+.actions { display: flex; gap: 8px; }
+.btn-ghost {
+  padding: 6px 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.02); color: var(--text); cursor: pointer; transition: .2s;
+}
+.btn-ghost:hover { border-color: rgba(255,255,255,.25); }
+.btn-danger { color: #ffd1d1; border-color: rgba(255,107,107,.25); }
+.empty { color: var(--muted); padding: 20px 6px; }
+
+/* small screens */
+@media (max-width: 560px) {
+  .container { padding: 20px; }
+  .actions { gap: 6px; }
+}

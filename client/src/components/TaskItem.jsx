@@ -13,6 +13,7 @@
     return (
         <li className={`item ${task.completed ? 'done' : ''}`}>
         <input
+            className="check"
             aria-label={`Mark ${task.title} complete`}
             type="checkbox"
             checked={task.completed}
@@ -26,6 +27,7 @@
             onBlur={handleSave}
             onKeyDown={(e) => e.key === 'Enter' && handleSave()}
             autoFocus
+            className="title"
             />
         ) : (
             <span className="title" onDoubleClick={() => setIsEditing(true)}>
@@ -33,8 +35,14 @@
             </span>
         )}
         <div className="actions">
-            {!isEditing && <button onClick={() => setIsEditing(true)} aria-label="Edit">Edit</button>}
-            <button onClick={onDelete} aria-label="Delete">Delete</button>
+            {!isEditing && (
+            <button onClick={() => setIsEditing(true)} className="btn-ghost" aria-label="Edit">
+                Edit
+            </button>
+            )}
+            <button onClick={onDelete} className="btn-ghost btn-danger" aria-label="Delete">
+            Delete
+            </button>
         </div>
         </li>
     );
