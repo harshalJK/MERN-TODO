@@ -178,3 +178,6 @@ h1 {
   .container { padding: 20px; }
   .actions { gap: 6px; }
 }
+
+.item { grid-template-columns: auto auto 1fr auto; }
+
